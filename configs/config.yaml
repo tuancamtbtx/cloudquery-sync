@@ -1,0 +1,21 @@
+kind: source
+spec:
+  # Source spec section
+  name: 'azure'
+  path: 'cloudquery/azure'
+  registry: 'cloudquery'
+  version: 'v11.0.0'
+  destinations: ['bigquery']
+  tables: ['azure_resources_resources' ]
+---
+kind: destination
+spec:
+  name: bigquery
+  path: cloudquery/bigquery
+  registry: 'cloudquery'
+  version: 'v3.3.10'
+  write_mode: 'append'
+  spec:
+    project_id: ${PROJECT_ID}
+    dataset_id: azure_billing_export
+    
