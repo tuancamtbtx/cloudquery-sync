@@ -1,0 +1,26 @@
+name: CloudQuery
+on:
+  schedule:
+    - cron: '0 3 * * *' # Run daily at 03:00 (3am)
+
+jobs:
+  cloudquery:
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 # Checkout the code so we have access to the config file
+      - name: Configure AWS credentials # Setup AWS credentials (example)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: <role-arn> # based on the role you created in the prerequisites
+          aws-region: <region> # based on the region you created the role in
+      - uses: cloudquery/setup-cloudquery@v3
+        name: Setup CloudQuery
+        with:
+          version: "v4.3.5"
+      - name: Sync with CloudQuery
+        run: cloudquery sync cloudquery.yml --log-console
+        env:
+          CQ_DSN: ${{ secrets.CQ_DSN }} # Connection string to a PostgreSQL database
