@@ -1,0 +1,26 @@
+kind: source
+spec:
+  name: "awspricing"
+  path: "cloudquery/awspricing"
+  registry: "cloudquery"
+  version: "v3.0.15"
+  tables: ["*"]
+  destinations:
+    - "bigquery"
+  spec:
+    # Optional parameters
+    # region_codes: []
+    # offer_codes: []
+    # concurrency: 10000
+---
+kind: destination
+spec:
+  name: bigquery
+  path: cloudquery/bigquery
+  registry: 'cloudquery'
+  version: 'v3.3.10'
+  write_mode: 'append'
+  spec:
+    project_id: ${PROJECT_ID}
+    dataset_id: azure_billing_export
+    
